@@ -1,0 +1,4 @@
+set xlabel 'N_{omp}'
+set ylabel 'FP [Gflop/sec]'
+plot 'orig.txt' u 1:7 w lp t 'orig', \
+     'blck.txt' u 1:7 w lp t 'blck'

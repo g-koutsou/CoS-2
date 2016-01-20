@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH -J lapl-C
+#SBATCH -N 1
+#SBATCH -o C-%j.out
+#SBATCH -e C-%j.err
+
+module load intel-para
+
+L=256
+for omp in 1 2 4 8 16; do
+    export OMP_NUM_THREADS=$omp
+    srun -n 1 --cpus-per-task=$omp ./lapl-vect $L > vect-nomp${omp}.txt
+done 
+
+for omp in 1 2 4 8 16; do
+    echo $omp $(grep 'lapl()' vect-nomp${omp}.txt)
+done > vect.txt
+
+

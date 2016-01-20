@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J lapl-A
+#SBATCH -N 1
+#SBATCH -o A-%j.out
+#SBATCH -e A-%j.err
+
+L=256
+for omp in 1 2 4 8 16; do
+    export OMP_NUM_THREADS=$omp
+    srun -n 1 --cpus-per-task=$omp ./lapl $L > orig-nomp${omp}.txt
+done 
+
+for omp in 1 2 4 8 16; do
+    echo $omp $(grep 'lapl()' orig-nomp${omp}.txt)
+done > orig.txt
+
+
