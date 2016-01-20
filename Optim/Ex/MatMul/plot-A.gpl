@@ -1,0 +1,3 @@
+set xlabel 'MxN'
+set ylabel 'FP [Mflop/sec]'
+plot 'orig-sorted.txt' u ($1):14 w lp t 'orig'

@@ -1,0 +1,9 @@
+#!/bin/bash
+#SBATCH -J aos
+#SBATCH -N 1
+#SBATCH -o aos-%j.out
+#SBATCH -e aos-%j.err
+
+for L in 1024 1488 2160 3152 4592 6688 9728 14176 20640 30048 43728 63664 92672 134912 196384 285856 416112 605728 881728 1283504 1868336 2719664 3958880 5762768; do
+    srun ./space-time-aos $L
+done | tee aos.txt

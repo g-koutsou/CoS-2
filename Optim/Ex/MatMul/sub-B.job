@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J mm-blck
+#SBATCH -N 1
+#SBATCH -o blck-%j.out
+#SBATCH -e blck-%j.err
+
+L=(64 128 256 512 1024)
+
+for ((i=0; i<${#L[*]}; i++)) ; do
+    for ((j=$i; j<${#L[*]}; j++)) ; do
+	M=${L[$i]}
+	N=${L[$j]}	
+	srun ./mm-blck $M $N
+    done
+done | tee blck.txt
+
+cat blck.txt | grep BLCK | awk '{print $4*$7, $0}' | sort -n > blck-sorted.txt

@@ -1,0 +1,4 @@
+set xlabel 'L'
+set ylabel 'FP [Gflop/sec]'
+plot [][0:] 'aos.txt' u 4:10 w lp t 'orig', \
+            'soa.txt' u 4:10 w lp t 'intr'

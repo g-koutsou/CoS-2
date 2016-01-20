@@ -1,0 +1,3 @@
+set xlabel 'L'
+set ylabel 'BW [Gbytes/sec]'
+plot [][0:] 'aos.txt' u 4:10 w lp t 'orig'

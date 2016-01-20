@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J mm-orig
+#SBATCH -N 1
+#SBATCH -o orig-%j.out
+#SBATCH -e orig-%j.err
+
+L=(64 128 256 512 1024)
+
+for ((i=0; i<${#L[*]}; i++)) ; do
+    for ((j=$i; j<${#L[*]}; j++)) ; do
+	M=${L[$i]}
+	N=${L[$j]}	
+	srun ./mm-orig $M $N
+    done
+done | tee orig.txt
+
+cat orig.txt | awk '{print $4*$7, $0}' | sort -n > orig-sorted.txt
