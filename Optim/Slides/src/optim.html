@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Optimization</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      img[alt=logo] { width: 35%; float: center; padding: 25px}
+      img[alt=vn] { width: 100%; float: right;}
+      img[alt=vn-horiz] { width: 100%;}
+      img[alt=mm] { width: 65%; margin-left: 17.5%; margin-right: 17.5%;}
+      img[alt=mm-b] { width: 80%; margin-left: 10%; margin-right: 10%;}
+      img[alt=fmadd] { width: 45%; margin-left: 27.5%; margin-right: 27.5%;}
+      img[alt=aos] { width: 70%; margin-left: 15%; margin-right: 15%;}
+      img[alt=soa] { width: 70%; margin-left: 15%; margin-right: 15%;}
+      img[alt=lapl-rear] { width: 65%; margin-left: 17.5%; margin-right: 17.5%;}
+      img[alt=lapl-rear-1] { width: 35%; margin-left: 32.5%; margin-right: 32.5%;}
+      img[alt=stencil] { width: 70%; margin-left: 15%; margin-right: 15%;}
+      img[alt=lapl-orig] { width: 70%; margin-left: 15%; margin-right: 15%;}
+      img[alt=lapl-blck] { width: 60%; margin-left: 20%; margin-right: 20%;}
+      
+      body {
+	  font-family: Optima;
+	  color: #555555;
+	  font-weight: normal;
+      }
+    
+      .red {
+	  color: #aa2222;
+      }
+      
+      .green {
+	  color: #22aa22;
+      }
+      
+      h1 {
+	  font-family: 'Yanone Kaffeesatz';
+	  font-weight: normal;
+	  color: #6666AA;
+      }
+      
+      h2, h3, h4, h5, h6 {
+	  font-family: 'Yanone Kaffeesatz';
+	  font-weight: normal;
+	  color: #111155;
+      }
+      
+      .small {
+	  font-size: 1em;
+      }
+      
+      .smaller {
+	  font-size: 90%;
+      }
+      
+      .x4 {
+	  font-family: 'Yanone Kaffeesatz';
+	  font-size: 1.2em;
+	  font-weight: normal;
+	  color: #666699;
+      }
+      
+      code {
+	  background: #e7e8e2;
+	  border-radius: 5px;
+      }
+      
+      .remark-code, .remark-inline-code {
+	  font-family: Menlo;
+	  font-size: 13pt;
+      }
+      
+      .remark-code {
+	  font-size: 0.7em
+      }
+      
+      .remark-code-line-highlighted {
+	  background-color: #373832;
+      }
+      
+      .sn {
+	  font-family: 'Yanone Kaffeesatz';
+	  font-size: 1em;
+	  font-weight: bold;
+	  color: #3333DD;
+      }
+      
+      #slideshow .slide .content code {
+	  font-size: 0.8em;
+      }
+      
+      #slideshow .slide .content pre code {
+	  font-size: 0.9em;
+	  padding: 15px;      
+      }
+      
+      .center {
+	  width: 100%;
+	  float: center;
+	  margin-left: auto;
+	  margin-right: auto;
+      }
+      
+      .one-column {
+	  width: 100%;
+	  float: left;
+      }
+      
+      /* Two-column layouts */
+      .left-column {
+	  width: 48%;
+	  float: left;
+      }
+      
+      .right-column {
+	  width: 48%;
+	  float: right;
+      }
+      
+      .left-column-65 {
+	  width: 64%;
+	  float: left;
+      }
+      
+      .right-column-65 {
+	  width: 64%;
+	  float: right;
+      }
+      
+      .left-column-55 {
+	  width: 54%;
+	  float: left;
+      }
+      
+      .right-column-55 {
+	  width: 54%;
+	  float: right;
+      }
+      
+      .left-column-45 {
+	  width: 44%;
+	  float: left;
+      }
+      
+      .right-column-45 {
+	  width: 44%;
+	  float: right;
+      }
+      
+      .left-column-35 {
+	  width: 34%;
+	  float: left;
+      }
+      
+      .right-column-35 {
+	  width: 34%;
+	  float: right;
+      }
+      
+      .left-column-40 {
+	  width: 39%;
+	  float: left;
+      }
+      
+      .right-column-40 {
+	  width: 39%;
+	  float: right;
+      }
+      
+      .left-column-30 {
+	  width: 29%;
+	  float: left;
+      }
+      
+      .right-column-30 {
+	  width: 29%;
+	  float: right;
+      }
+      
+      .left-column-20 {
+	  width: 19%;
+	  float: left;
+      }
+      
+      .right-column-20 {
+	  width: 19%;
+	  float: right;
+      }
+      
+      .left-column-5 {
+	  width: 4%;
+	  float: left;
+      }
+      
+      .right-column-5 {
+	  width: 4%;
+	  float: right;
+      }
+      
+      .left-column-60 {
+	  width: 59%;
+	  float: left;
+      }
+      
+      .right-column-60 {
+	  width: 59%;
+	  float: right;
+      }
+      
+      .left-column-70 {
+	  width: 69%;
+	  float: left;
+      }
+      
+      .right-column-70 {
+	  width: 69%;
+	  float: right;
+      }
+      
+      .smallerer {
+	  font-size: 80%;
+      }      
+    </style>
+</head>
+<body>
+  <textarea id="source">
+
+name: title
+class: center, middle
+layout: true
+
+---
+template: title
+
+# Optimization
+
+### Giannis Koutsou
+
+.x4[ CoS-2, HPC-LEAP Winter School, January 2016, JSC]
+
+.one-column[![logo](./hpc-leap-logo.png)]
+
+
+---
+layout: false 
+# Outline
+
+### Expectations
+- Optimization is a very broad subject
+- Rather than a broad overview of techniques, we will attempt an in-depth look at
+  some specific optimization strategies
+- These techniques will be motivated by a set of example codes which
+  we will optimize step-by-step
+- The resulting optimizations may seem problem-specific, but
+  (hopefully) you will take home the general strategy
+- Optimizations for CPUs, though they may be generalizable
+
+
+### Lecture section
+- Refresh from previous courses (notation, etc.)
+- Understanding a code's current performance
+- Understanding a code's achievable performance
+- Steps to take to optimize, motivate by examples/exercises
+
+---
+
+# Outline
+
+### Exercises
+
+#### Wednesday
+
+- Data layout transformations for easier (auto-)vectorization: AoS to SoA
+- Blocking for mitigating cache misses: transformations on matrix-matrix multiplication
+
+#### Thursday
+- 3D laplacian-stencil code:
+    - Multi-threading (`OpenMP`)
+    - Data layout transformations
+    - Blocking
+
+---
+
+# Hardware characteristics
+
+.left-column[
+### Peak floating point rate
+- The theoretical, highest number of floating point operations that
+  can be carried out by a computational unit
+- Depends on: clock rate, vector length, FPUs per core, cores per socket
+]
+
+.right-column[
+### Peak bandwidth
+- The theoretical, highest number of bytes that can be read/written
+  from/to some level of memory (L1,2,3 cache, RAM, etc.)
+- For RAM: data rate, channels, ranks, banks
+]
+
+.red[When optimizing, it is important to have these numbers in mind for the machine you're running on]
+
+---
+
+# Jureca
+
+### E.g. Jureca nodes have the following characteristics:
+
+- Peak FP
+  - 12-cores per socket, 2 sockets per node, clock: 2.5 GHz
+  - Best case: two 256-bit fused multiply-and-adds per cycle (AVX2.0)
+  - In double precision: 2$\times$(4 `mul` + 4 `add`) per cycle = 16 flop/cycle
+  - Therefore: 2.5x10$^9$ cycles/s $\times$ 16 flop/cycle = 40 Gflop/s per core
+  - 960 Gflop/s per node
+- Peak BW
+  - 68 GB/s to RAM assuming all channels populated
+  - Good assumption for an HPC system
+- Some (semi-)standard tools
+  - On Linux, you can obtain processor details via `cat /proc/cpuinfo`.
+  - You can obtain topology and memory info e.g. `hwloc`, `dmidecode`
+    (latter requires access to `/dev/mem`)
+
+---
+
+# Jureca
+#### On Linux, you can obtain processor details via `cat /proc/cpuinfo`. For a Jureca compute node:
+
+```bash
+processor       : 0
+vendor_id       : GenuineIntel
+...
+model name      : Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz
+...
+cpu MHz         : 3129.296
+cache size      : 30720 KB
+physical id     : 0
+siblings        : 24
+core id         : 0
+cpu cores       : 12
+...
+cpuid level     : 15
+...
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr
+pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht
+tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc...```
+
+<!-- arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid ... -->
+
+---
+# Computational kernels
+
+### Sustained performance
+- Sustained FP-rate: the measured, average number of floating point
+  operations carried out by the kernel per unit time
+  - `add`, `sub`, and `mul` count as 1 flop
+  - `dev`, `sqrt`, `sin`, etc. count $\ge$ 2 flops. Depends on architecture
+  - Count number of flops in kernel and divide by runtime
+  - Alternatively, or for more complex codes, use performance counters
+
+#### In our examples we will see cases of kernels where the flops are countable
+
+- Sustained BW: the measured, average bytes read/written from main memory per unit time
+  - As in the case of FP-rate, count bytes needed to be read and bytes
+    needed to be written to and from RAM and divide by run time
+  - .red[Maximum data reuse] assumption: once data is read from RAM,
+    it never needs to be re-read. I.e., all cache misses are
+    compulsory
+
+---
+# An example
+
+- Say you're running a kernel which performs:
+
+  $Y_{i}^{ab} = A^{ac} \cdot X_i^{cb}$, $i = 0,...,L-1$, $a,b,c = 0,...,N-1$, $L \gg N$
+
+- Naive implementation:
+
+.left-column[
+```c
+double Y[L][N][N];
+double X[L][N][N];
+double A[N][N];
+
+/* ...
+ * Initialize X[][][] and A[][][]
+ * ...
+ */
+
+for(int i=0; i<L; i++) {
+  for(int a=0; a<N; a++) {		  
+    for(int b=0; b<N; b++) {
+      Y[i][a][b] = 0;
+      for(int c=0; c<N; c++) {
+     	Y[i][a][b] += A[a][c]*X[c][b];
+      }
+    }
+  }
+}
+```]
+.right-column[
+- Number of fp operations
+    - $N_{fp} = L \cdot 2 \cdot N^3$
+- Number of bytes of I/O
+    - $N_{IO} = w\cdot (2\cdot L\cdot N^2 + N^2)$
+    - $w$: word-length in bytes, e.g. 
+        - $w=4$ bytes for single precision,
+        - $w=8$ bytes for double, etc.
+	- $2 L N^2$ to $O(L)$
+    - In any case, if $N$ small enough, `A` should be kept in low-level cache
+]
+
+---
+# An example
+
+#### Note the assumption of data reuse
+
+```c
+Y[i][0][0] = A[0][0]*X[i][0][0] + A[0][1]*X[i][1][0] + ... + A[0][N-1]*X[i][N-1][0];
+Y[i][0][1] = A[0][0]*X[i][0][1] + A[0][1]*X[i][1][1] + ... + A[0][N-1]*X[i][N-1][0];
+...
+Y[i][1][0] = A[1][0]*X[i][0][0] + A[1][1]*X[i][1][0] + ... + A[1][N-1]*X[i][N-1][0];
+Y[i][1][1] = A[1][0]*X[i][0][1] + A[1][1]*X[i][1][1] + ... + A[1][N-1]*X[i][N-1][1];
+...	 
+```
+
+Elements of `X` and `A` are required multiple times. However we only
+count their loads once.
+.left-column[
+- Given some measurement of the run-time $\bar{T}$
+  - FP-rate: $\beta\_{fp} = \frac{N\_{fp}}{\bar{T}}$
+  - IO-rate: $\beta\_{IO} = \frac{N\_{IO}}{\bar{T}}$
+- This motivates defining an *intensity* $I=\frac{N\_{fp}}{N\_{IO}}$
+]
+.right-column[
+```c
+for(int i=0; i<L; i++) {
+  for(int a=0; a<N; a++) {		  
+    for(int b=0; b<N; b++) {
+      Y[i][a][b] = 0;
+      for(int c=0; c<N; c++) {
+   	    Y[i][a][b] += A[a][c]*X[c][b];
+      }
+    }
+  }
+}
+```]
+
+
+---
+# Intensities
+
+### Computational kernel intensity
+- Ratio of kernel floating point operations to bytes of I/O
+- For our previous example:
+  - $I\_k=\frac{N\_{fp}}{N\_{IO}}=\frac{2 L N^3}{2 w L N^2} = N/w$
+  - Note how the problem size $L$ drops out $\Rightarrow$ constant
+    $I\_k$ irrespective of problem size
+  - E.g. for $N=3$ and double precision, $I\_k=0.375$ flops/byte
+
+### Machine flop/byte ratio
+
+.left-column-70[
+- Similarly to $I\_k$, we can define the machine flop/byte ratio ($I\_m$)
+- $I\_m=\frac{\gamma\_{fp}}{\gamma\_{IO}}$
+- E.g. for Jureca (compute node): $I\_m \simeq 14 \frac{flop}{byte}$
+]
+
+.right-column-20[![vn](./vn-single.png)]
+
+---
+
+# Intensities
+
+### Balance between kernel / hardware intensities
+
+- $I\_k \gg I\_m$: Kernel is "compute-bound" on this
+  architecture. Higher $\gamma\_{fp}$ would lead to higher
+  performance, but higher $\gamma\_{IO}$ would not necessarily.
+- $I\_k \ll I\_m$: Kernel is "bandwidth-" or "memory-bound" on this
+  architecture. Higher $\gamma\_{IO}$ would lead to higher
+  performance, but higher $\gamma\_{fp}$ would not necessarily.
+- $I\_k \simeq I\_m$: Kernel is balanced on this architecture. Ideal situation.
+
+#### For the example we have been studying, and for the case of Jureca
+- $I\_k \ll I\_m$ $\Rightarrow$ the kernel is memory-bound on Jureca
+
+### .red[Note the assumptions] that enter $I_k$ and $I_m$
+- $\gamma\_{fp}$ considers all operations can be a sequence of multiply-and-add
+- $\beta\_{IO}$ assumes maximum data reuse
+- $I\_k$ constant if problem size $L$ drops out
+
+---
+
+# Kernel computational intensity
+
+### Another example: matrix-matrix multiplication
+
+- Consider a matrix-matrix multiplication: $C\_{M\times K}=A\_{M\times
+  N}\cdot B\_{N\times K}$
+
+.left-column-40[
+```c
+double C[M][K];
+double A[M][N];
+double B[N][K];
+
+for(int m=0; m<M; m++) {
+  for(int k=0; k<K; k++) {		  
+	C[m][k] = 0;
+    for(int n=0; n<N; n++) {
+	  C[m][k] += A[m][n]*B[n][k];
+    }
+  }
+}
+```
+
+]
+
+.right-column-60[
+- $N_{fp} = 2\cdot M\cdot K\cdot N$
+- $N_{IO} = w\cdot(M\cdot K + M\cdot N + N\cdot K)$
+- $I_{k} = \frac{2}{w}\dfrac{1}{\frac{1}{M} + \frac{1}{N} + \frac{1}{K}}$
+- E.g. for a square problem $M=N=K$, $\Rightarrow I_k=\frac{2}{3}\dfrac{N}{w}$
+]
+
+.one-column[
+- This is an example of a kernel where $I_k$ .green[depends on the problem size].
+- On a given architecture with $I\_m$, the kernel transitions from
+bandwidth-bound to compute-bound as $N$ increases.
+- On Jureca, the kernel is balanced when $N\ge 12$ $\Rightarrow$ when
+  the matrices are too large to fit in cache the problem is
+  compute-bound.]
+
+---
+
+# Optimization
+
+### Given a code you wish to optimize, for an architecture with $I\_m$
+
+- What is $N\_{fp}$ and $N\_{IO}$ and what is the resulting $I\_k$?
+- Is the kernel memory or compute bound on this architecture?
+- What do you obtain for $\beta\_{fp}$ and $\beta\_{IO}$
+    - For this one requires measuring the performance on the targeted
+      architecture
+- What are the ratios $\frac{\beta\_{fp}}{\gamma\_{fp}}$ and
+$\frac{\beta\_{IO}}{\gamma\_{IO}}$?
+
+#### These are questions you need to answer before considering optimization ####
+
+- After answering the above, we can start considering targeted
+  optimizations for our kernel on the given machine
+  - If your kernel is .green[memory-bound], we should be trying to optimize
+  for .green[memory I/O]. Ideally we try to achieve
+  a $\frac{\beta\_{IO}}{\gamma\_{IO}}\rightarrow 1$.
+  - If your kernel is .green[compute-bound], we should be trying to
+  optimize for a higher .green[FP-rate]. Ideally we try to achieve a
+  $\frac{\beta\_{fp}}{\gamma\_{fp}}\rightarrow 1$.
+- In practice, however, we will see how these two strategies in
+  general are combined to optimize both memory- and compute-bound
+  kernels.
+
+---
+name: opt
+layout: true
+
+# Optimization
+
+#### On modern systems, the compiler and the architecture will do a lot for you ####
+
+- Loop unrolling, prefetching, out-of-order execution, auto-vectorization, etc.
+
+#### We will motivate our optimizations by considering specific examples where a significant speedup can be achieved on top of `-O3`
+
+
+
+---
+template: opt
+
+#### Vectorization
+- We will see how to use *vector intrinsic functions* which compile
+  to SIMD instructions
+- At first sight, this optimization seems to target compute bound kernels
+- However the data transformations required to efficiently vectorize
+  a compute kernel also prove beneficial for the I/O efficiency
+
+.left-column-55[
+```C
+  float ar = creal(a);
+  float ai = cimag(a);
+  float aux0[] = { ar, ar, ar, ar};
+  float aux1[] = {-ai, ai,-ai, ai};
+  register __m128 va_re = _mm_load_ps(aux0);
+  register __m128 va_im = _mm_load_ps(aux1);
+  register __m128 x0, x1, y0;
+  ...
+```
+]
+
+.right-column-45[
+```C
+  for(int i=0; i<L; i+=2) {
+    y0 = _mm_load_ps((float *)&y[i]);
+    x0 = _mm_load_ps((float *)&x[i]);
+    x1 = _mm_shuffle_ps(x0, x0, MASK);
+    y0 = _mm_fmadd_ps(va_im, x1, y0);
+    y0 = _mm_fmadd_ps(va_re, x0, y0);    
+    _mm_store_ps((float *)&y[i], y0);
+  }
+```
+]
+
+---
+template: opt
+
+#### Data layout transformations
+- Transformations for mitigation of cache misses (improve temporal
+  and spatial cache locality)
+- Transformations which can assist vectorization or auto-vectorization
+
+#### Cache awareness
+- Similar to the above, this optimization will allow us to modify
+  code parameters according to cache characteristics (*blocking* or *tiling*)
+
+---
+template: opt
+
+#### Mutli-threading
+- Some simple `OpenMP` can go a long way
+
+
+![vn-horiz](./vn-horiz.png)
+
+
+- For compute-bound kernels, this effectively multiplies $\gamma_{fp}$
+- For memory-bound kernels, allows better saturation of
+  $\gamma_{IO}$
+
+---
+name: vec
+layout: true
+
+# Vectorization
+
+### Most modern processors have some vectorization capabilities
+- SSE, AVX, AltiVec, QPX
+- Single Instruction Multiple Data -- SIMD
+
+---
+template: vec
+name: vec-1
+
+.left-column[
+```c
+for(int i=0; i<L; i++)
+  y[i] = a*x[i] + y[i];
+```
+]
+---
+template: vec-1
+name: vec-2
+
+.right-column[
+```c
+for(int i=0; i<L; i+=4) {
+  y[i  ] = a*x[i  ] + y[i  ];
+  y[i+1] = a*x[i+1] + y[i+1];
+  y[i+2] = a*x[i+2] + y[i+2];
+  y[i+3] = a*x[i+3] + y[i+3];
+}
+```
+]
+---
+template: vec-2
+name: vec-3
+
+.left-column[
+```c
+float4 va = {a,a,a,a};
+for(int i=0; i<L; i+=4) {
+  float4 vy;
+  float4 vx;
+  load4(vx, &x[i]);
+  load4(vy, &y[i]);
+  vy = va*vx + vy;
+  store4(&y[i], vy);
+}
+```
+##### .red[Note]: the above is pseudo-code, namely `load4`, `float4`, etc. are simplifications.
+]
+
+---
+template: vec-3
+name: vec-4
+
+.right-column[
+- In many case, the compiler will generate vector instructions (auto-vectorization)
+- If not, we will learn here how to explicitly program using these vector
+  instructions, via *intrinsic functions*
+]
+
+---
+layout: false
+
+# Vectorization
+
+### Intrinsics ###
+
+- These are extensions to C and architecture-specific
+- Here we will see some Intel intrinsics, though most of what we will
+  learn is generalizable to other architectures. In the best case,
+  they differ in the function naming convention
+- For an exhaustive reference on Intel intrinsics, the best resource is at:
+  https://software.intel.com/sites/landingpage/IntrinsicsGuide
+  - Lists intrinsics for all versions of SSE to AVX and KNL
+  - Note the header requirements depending on the extension version
+    under which the function you would like to use is defined
+    (e.g. `<xmmintrin.h>`, `<immintrin.h>`, etc.)
+
+![fmadd](./fmadd.png)
+
+.center[`d = _mm256_fmadd_pd(a, b, c)`]
+
+---
+name: vintro
+layout: true
+
+# Vectorization
+
+### Intrinsics - short intro
+
+---
+template: vintro
+
+- Vector types defined in `<?mmintrin.h>`:
+    - `__m128`: 128-bit single precision $\Rightarrow$ can pack four
+    - `__m128d`: 128-bit double precision $\Rightarrow$ can pack two
+    - `__m256` (`__m256d`): 256-bit float (double), packs eight (four)
+- `_mm_load_pd()`: "load packed double", e.g.:
+```C
+  double *x;
+  posix_memalign(&x, 32, L*sizeof(double));
+  double __attribute__((aligned(32))) a;
+  __m128d vx, va;
+  _mm_load_pd(vx, &x[i]);
+  _mm_load_pd(va, &a);
+```
+- .red[**Alignment restrictions**]: `&x[i]` must be a multiple of the
+vector length.
+- Use `posix_memalign()` to allocate
+- Use `__attribute__((aligned(32)))` for static
+- `_mm_load_ps()`, `_mm256_load_ps()`, etc.
+
+---
+template: vintro
+- Store:
+    - `_mm_store_ps()`, `_mm256_store_ps()`, `_mm_store_pd()`, etc.
+    - Same restriction on alignment as in the case of `load`
+- Arithmetic:
+	- `c = _mm_add_pd(a, b);`, $c = a + b$ with $a$, $b$, $c$ of type `__m128d`
+    - `c = _mm256_mul_ps(a, b);`, $c = a \times b$ with $a$, $b$, $c$ of type `__m256`
+    - In general, `_mm_` prepends 128-bit vector instructions (SSE)
+      and `_mm256_` prepends 256-bit instructions (AVX)
+    - If processor supports fused-multiply-add (`fma` flag in `/proc/cpuinfo`), then: <br />
+      `d = _mm256_fmadd_pd(a, b, c)`, $d = a\times b + c$ with $a$, $b$, $c$, $d$ of type `__m256d`
+
+---
+template: vintro
+
+- Shuffles, swizzles, 
+    - Instructions which allow permuting the elements within a vector
+- One classical demonstration is when doing complex multiplications, e.g.:<br />
+  $z_n = x_n\cdot y_n$, with $x$, $y$, $z$ complex, e.g: $x_n = x_n^r + ix_n^i$ $\Rightarrow$<br />
+  $z_n^r = x_n^r\cdot y_n^r - x_n^r \cdot y_n^r$<br />
+  $z_n^i = x_n^r\cdot y_n^i + x_n^i \cdot y_n^r$
+- A complex type is typically implemented as an array of two elements:
+
+```C
+for(int n=0; n<N; n++) {
+ z[n][0] = x[n][0]*y[n][0] - x[n][1]*y[n][1]; /* z[n][0]: real part of z[n] */
+ z[n][1] = x[n][1]*y[n][0] + x[n][0]*y[n][1]; /* z[n][1]: imag part of z[n] */
+}
+```
+
+---
+template: vintro
+
+```C
+for(int n=0; n<N; n++) {
+ z[n][0] = x[n][0]*y[n][0] - x[n][1]*y[n][1]; /* z[n][0]: real part of z[n] */
+ z[n][1] = x[n][1]*y[n][0] + x[n][0]*y[n][1]; /* z[n][1]: imag part of z[n] */
+}
+```
+- One (naive) way to implement this in intrinsics:
+
+```C
+__m256d vx0, vx1, vy0, vy1, aux0, aux1;
+__m256d mp = {-1.0, +1.0};
+for(int n=0; n<N; n++) {
+  _mm_load_pd(vx0, &x[n][0]);
+  _mm_load_pd(vy0, &y[n][0]);
+  vx1 = _mm_shuffle_pd(vx0, vx0, 0b10); /* swap real and imag of vx0 and put into vx1 */
+  vy1 = _mm_shuffle_pd(vy0, vy0, 0b11); /* put the imag of vy0 into both elems of vy1 */
+  vy0 = _mm_shuffle_pd(vy0, vy0, 0b00); /* put the real of vy0 into both elems of vy0 */
+  vx1 = _mm_mul_pd(mp, vx1);        /* flip sign of 1st elem of vx1 and store in vx1 */
+  aux0 = _mm_mul_pd(vx0, vy0);
+  aux1 = _mm_mul_pd(vx1, vy1);
+  vz = _mm_add_pd(aux0, aux1);
+  _mm_store_pd(&z[n][0], vz);
+}
+```
+
+---
+template: vintro
+
+- General form of shuffle: `c = _mm_shuffle_pd(a, b, mask)`
+
+----
+.center[
+`mask = 0b00` $\rightarrow$ `c = {a[0], b[0]}` &nbsp; &nbsp; &nbsp; `mask = 0b01` $\rightarrow$ `c = {a[1], b[0]}`<br />
+`mask = 0b10` $\rightarrow$ `c = {a[0], b[1]}` &nbsp; &nbsp; &nbsp; `mask = 0b11` $\rightarrow$ `c = {a[1], b[1]}`
+]
+
+----
+- In general, rightmost bits of `mask` select elements of `a` and leftmost bits select elements of `b`
+- A better implementation may be (SSE3):
+
+.left-column-35[
+```C
+for(int n=0; n<N; n++) {
+ z[n][0]  = x[n][0]*y[n][0];
+ z[n][0] -= x[n][1]*y[n][1];
+ z[n][1]  = x[n][1]*y[n][0];
+ z[n][1] += x[n][0]*y[n][1];
+}
+```
+
+`c = hadd(a, b)` $\rightarrow$<br /> `c[0] = a[0]+a[1]`,<br /> `c[1] = b[0]+b[1]`
+]
+
+.right-column-65[
+```C
+__m128d mp = {+1.0, -1.0};
+for(int n=0; n<N; n++) {
+  _mm_load_pd(vx0, &x[n][0]);
+  _mm_load_pd(vy0, &y[n][0]);
+  vx1 = _mm_shuffle_pd(vx0, vx0, 0b10); /* swap re-im */
+  vx0 = _mm_mul_pd(mp, vx0);
+  aux0 = _mm_mul_pd(vx0, vy0);
+  aux1 = _mm_mul_pd(vx1, vy0);
+  vz = _mm_hadd_pd(aux0, aux1);
+  _mm_store_pd(&z[n][0], vz);
+}
+```
+]
+
+---
+layout: false
+name: datal
+layout: true
+# Data layout
+---
+template: datal
+
+### Data layout transformations 
+
+- Better cache locality
+    - The data are ordered in a way as close to the order in which
+      they will be accessed in your kernels as possible
+    - The data are reordered such that when an element needs to be
+      accessed multiple times, these multiple accesses are issued very
+      close to each other
+    - Optimizes for temporal and for spatial locality
+
+- Easier vectorization
+    - The data are ordered such that the same operation can be applied
+      to consecutive elements
+        - Assists the compiler in detecting auto-vectorization opportunities
+        - Assists the programmer in implementing the intrinsics
+
+---
+template: datal
+
+### 1. Matrix-matrix multiplication
+
+.left-column[
+$$ C\_{ij} = \sum\_{k=0}^{N-1} A\_{ik} \cdot B\_{kj} $$
+$$A\_{M\times N}, B\_{N\times M}, C\_{M\times M}$$
+]
+
+
+.right-column[
+```C
+for(int i=0; i<M; i++) {
+  for(int j=0; j<M; j++) {
+    C[i*M + j] = 0; 
+	for(int k=0; k<N; k++) {
+	  C[i*M + j] += A[i*N + k]*B[k*M + j];
+	}
+  }	  
+}	  
+```
+]
+
+![mm](./mm.png)
+
+- Repeated reading of columns of $B$
+- If $N$ too large, a whole row of $A$ may not fit into L2 cache
+
+---
+
+### 1. Matrix-matrix multiplication
+
+#### Consider a blocked version
+```C
+for(int i=0; i<M; i+=BM)
+  for(int j=0; j<M; j+=BM) {
+    Cb[:BM][:BM] = 0;
+	for(int k=0; k<N; k++) {
+	  Ab[:BM][:BN] = A[i:i+BM][k:k+BN];
+	  Bb[:BN][:BM] = B[k:k+BN][j:j+BM];
+	  for(int ib=0; ib<BM; ib++) 
+	    for(int jb=0; jb<BM; jb++) 
+	      for(int kb=0; kb<BN; kb++) 
+	        Cb[ib][jb] += Ab[ib][kb] * Bb[kb][jb];
+	  C[i:i+BM][j:j+BM] = Cb[:BM][:BM];
+	}
+  }	  
+```  
+
+![mm-b](./mm-1.png)
+
+---
+
+### 1. Matrix-matrix multiplication
+
+#### Consider a blocked version
+```C
+for(int i=0; i<M; i+=BM)
+  for(int j=0; j<M; j+=BM) {
+    Cb[:BM][:BM] = 0;
+	for(int k=0; k<N; k++) {
+	  Ab[:BM][:BN] = A[i:i+BM][k:k+BN];
+	  Bb[:BM][:BN] = B[j:j+BM][k:k+BN]; /* Transpose B! */
+	  for(int ib=0; ib<BM; ib++) 
+	    for(int jb=0; jb<BM; jb++) 
+	      for(int kb=0; kb<BN; kb++) 
+	        Cb[ib][jb] += Ab[ib][kb] * Bb[jb][kb];
+	  C[i:i+BM][j:j+BM] = Cb[:BM][:BM];
+	}
+  }	  
+```  
+
+![mm-b](./mm-1.png)
+
+---
+
+### 2. AoS to SoA
+
+#### AoS: Array of structures
+
+Arrays of structures arise naturally when mapping physical problems to
+code. E.g. say you want to define an array of coordinates:
+.left-column[
+```C
+typedef struct {
+  float x;
+  float y;
+  float z;
+} coords;
+```
+]
+.right-column[
+You can now allocate an array of `coords`:
+```C
+size_t L = 1000;
+coords *arr = malloc(sizeof(coords)*L);
+```
+]
+
+.one-column[
+Now assume you would like to get an array of the distances of the
+coordinates from the origin:
+]
+.left-column[
+```C
+for(int i=0; i<L; i++)
+  r[i] = sqrt(arr[i].x*arr[i].x +
+              arr[i].y*arr[i].y +
+              arr[i].z*arr[i].z);
+```
+]
+
+.right-column[
+
+You can see how the choice of data layout makes auto-vectorization difficult. A common way around this is to use a Structure of Arrays (SoA) rather than an Array of Structures.
+
+]
+---
+
+### 2. AoS to SoA
+
+Define a structure of arrays, this is similar to how one programs for GPUs:
+.left-column-30[
+```C
+typedef struct {
+  float *x;
+  float *y;
+  float *z;
+} coords;
+```
+]
+.right-column-70[
+And now allocate each element of `coords` separately:
+```C
+coords arr;
+arr.x = malloc(sizeof(float)*L);
+arr.y = malloc(sizeof(float)*L);
+arr.z = malloc(sizeof(float)*L);
+```
+]
+
+.one-column[
+You can see how it is more obvious vectorize the distance calculation
+after unrolling:
+
+```C
+for(int i=0; i<L; i+=4) {
+  r[i  ] = sqrt(arr.x[i  ]*arr.x[i  ]+arr.y[i  ]*arr.y[i  ]+arr.z[i  ]*arr.z[i  ]);
+  r[i+1] = sqrt(arr.x[i+1]*arr.x[i+1]+arr.y[i+1]*arr.y[i+1]+arr.z[i+1]*arr.z[i+1]);
+  r[i+2] = sqrt(arr.x[i+2]*arr.x[i+2]+arr.y[i+2]*arr.y[i+2]+arr.z[i+2]*arr.z[i+2]);
+  r[i+3] = sqrt(arr.x[i+3]*arr.x[i+3]+arr.y[i+3]*arr.y[i+3]+arr.z[i+3]*arr.z[i+3]);
+}
+```
+]
+
+---
+
+### 3. Stencil codes
+
+Another application of the data re-ordering is in stencil
+codes. Consider a 2-D stencils operation:
+$$ \phi\_{x,y} \leftarrow 4\psi\_{x,y} - (\psi\_{x+1,y} + \psi\_{x-1,y} + \psi\_{x,y+1} + \psi\_{x,y-1})$$
+Consider an unrolled implementation of this, with `x` running fastest and `y` slowest:
+.small[
+```C
+for(int y=0; y<L; y++)
+for(int x=0; x<L; x+=4) {
+ B[y][x  ] = 4*A[y][x  ] - (A[y][x+1] + A[y][x-1] + A[y+1][x  ] + A[y-1][x  ]);
+ B[y][x+1] = 4*A[y][x+1] - (A[y][x+2] + A[y][x  ] + A[y+1][x+1] + A[y-1][x+1]);
+ B[y][x+2] = 4*A[y][x+2] - (A[y][x+3] + A[y][x+1] + A[y+1][x+2] + A[y-1][x+2]);
+ B[y][x+3] = 4*A[y][x+3] - (A[y][x+4] + A[y][x+2] + A[y+1][x+3] + A[y-1][x+3]);
+}
+```
+]
+
+If `A[y][x:x+4]` is fit into a vector register, you can see how many
+shuffles of the elements are required to vectorize this operations.
+
+---
+
+### 3. Stencil codes
+
+.small[
+```C
+for(int y=0; y<L; y++)
+for(int x=0; x<L; x+=4) {
+ B[y][x  ] = 4*A[y][x  ] - (A[y][x+1] + A[y][x-1] + A[y+1][x  ] + A[y-1][x  ]);
+ B[y][x+1] = 4*A[y][x+1] - (A[y][x+2] + A[y][x  ] + A[y+1][x+1] + A[y-1][x+1]);
+ B[y][x+2] = 4*A[y][x+2] - (A[y][x+3] + A[y][x+1] + A[y+1][x+2] + A[y-1][x+2]);
+ B[y][x+3] = 4*A[y][x+3] - (A[y][x+4] + A[y][x+2] + A[y+1][x+3] + A[y-1][x+3]);
+}
+```
+]
+
+An alternative is to change the data layout so that we vectorize over
+distant elements. I.e. we can reshape the data layout: <br />
+
+from: `A[y][x] <- A + y*L + x` <br/>
+to: `vA[y0][x][y1] = A[y0+y1*L/4][x]`, and re-write the kernel:
+.smaller[
+```C
+for(int y=0; y<L/4; y++)
+for(int x=0; x<L; x++) {
+ vB[y][x][0] = 4*vA[y][x][0] - (vA[y][x+1][0] + vA[y][x-1][0] + vA[y+1][x][0] + vA[y-1][x][0]);
+ vB[y][x][1] = 4*vA[y][x][1] - (vA[y][x+1][1] + vA[y][x-1][1] + vA[y+1][x][1] + vA[y-1][x][1]);
+ vB[y][x][2] = 4*vA[y][x][2] - (vA[y][x+1][2] + vA[y][x-1][2] + vA[y+1][x][2] + vA[y-1][x][2]);
+ vB[y][x][3] = 4*vA[y][x][3] - (vA[y][x+1][3] + vA[y][x-1][3] + vA[y+1][x][3] + vA[y-1][x][3]);
+}
+```
+]
+---
+
+### 3. Stencil codes
+
+Shuffling of the elements is still required but restricted to the
+boundaries. E.g. for periodic boundary conditions, the original code
+at the `y=0` boundary would be:
+
+.smaller[
+```C
+y = 0;
+for(int x=0; x<L; x++) {
+ B[0][x] = 4*A[0][x] - (A[0][x+1] + A[0][x-1] + A[1][x] + A[L-1][x]);
+}
+```
+]
+
+which requires shuffling of the boundary element at `y=L/4-1` of `vA`:
+
+.smaller[
+```C
+y = 0;
+for(int x=0; x<L; x++) {
+ vB[0][x][0] = 4*vA[0][x][0] - (vA[0][x+1][0] + vA[0][x-1][0] + vA[1][x][0] + vA[L/4-1][x][3]);
+ vB[0][x][1] = 4*vA[0][x][1] - (vA[0][x+1][1] + vA[0][x-1][1] + vA[1][x][1] + vA[L/4-1][x][2]);
+ vB[0][x][2] = 4*vA[0][x][2] - (vA[0][x+1][2] + vA[0][x-1][2] + vA[1][x][2] + vA[L/4-1][x][1]);
+ vB[0][x][3] = 4*vA[0][x][3] - (vA[0][x+1][3] + vA[0][x-1][3] + vA[1][x][3] + vA[L/4-1][x][0]);
+}
+```
+]
+---
+
+### 3. Stencil codes
+
+.smaller[
+```C
+y = 0;
+for(int x=0; x<L; x++) {
+ vB[0][x][0] = 4*vA[0][x][0] - (vA[0][x+1][0] + vA[0][x-1][0] + vA[1][x][0] + vA[L/4-1][x][3]);
+ vB[0][x][1] = 4*vA[0][x][1] - (vA[0][x+1][1] + vA[0][x-1][1] + vA[1][x][1] + vA[L/4-1][x][2]);
+ vB[0][x][2] = 4*vA[0][x][2] - (vA[0][x+1][2] + vA[0][x-1][2] + vA[1][x][2] + vA[L/4-1][x][1]);
+ vB[0][x][3] = 4*vA[0][x][3] - (vA[0][x+1][3] + vA[0][x-1][3] + vA[1][x][3] + vA[L/4-1][x][0]);
+}
+```
+![lapl-rear](./lapl-rear.png)
+]
+
+---
+template: title
+
+# Exercises
+
+`git clone https://github.com/g-koutsou/CoS-2.git`
+
+`git pull origin master`
+
+`juropa3.zam.kfa-juelich.de`
+
+`salloc --reservation=hpc-leap-4`
+
+---
+layout: false
+
+# AoS to SoA
+
+In the first exercise we will look into two optimizations:
+1. Going from an AoS to a SoA,
+2. which will assist the vectorization of our kernel with intrinsics
+
+The kernel does the following: assuming an array of 4-vectors: $a_i = (ct_i, x_i, y_i, z_i)$ compute the "norm": $ s\_i = \sqrt{(ct\_i)^2 - (x\_i^2 + y\_i^2 + z\_i^2)} $ <br />
+Navigate to: `CoS-2/Optim/Ex/AoS-to-SoA/`.
+.left-column[.smaller[
+```C
+while(1) {
+  double t0 = stop_watch(0);
+  for(int i=0; i<NREP; i++)
+     comp_s(arr, L);
+  t0 = stop_watch(t0)/(double)NREP;
+  t0acc += t0;
+  t1acc += t0*t0;
+  if(n > 2) {
+    double ave = t0acc/n;
+    double err = sqrt(t1acc/n -
+                      ave*ave)/sqrt(n);
+    if(err/ave < 0.1) {
+      t0acc = ave;
+      t1acc = err;
+      break;
+    }
+  }	  
+  n++;
+}
+```
+]]
+
+.right-column[
+
+`stop_watch()` is just a system timer:
+
+.smallerer[
+```C
+double
+stop_watch(double t0) {
+  struct timeval tp;
+  gettimeofday(&tp, NULL);
+  double t1 = tp.tv_sec + tp.tv_usec*1e-6;  
+  return t1-t0;
+}```
+]]
+
+---
+# AoS to SoA
+
+In the first exercise we will look into two optimizations:
+1. Going from an AoS to a SoA,
+2. which will assist the vectorization of our kernel with intrinsics
+
+The kernel does the following: assuming an array of 4-vectors: $a_i = (ct_i, x_i, y_i, z_i)$ compute the "norm": $ s\_i = \sqrt{(ct\_i)^2 - (x\_i^2 + y\_i^2 + z\_i^2)} $
+
+.left-column[
+`stop_watch()` is just a system timer:
+.smallerer[
+```C
+double
+stop_watch(double t0) {
+  struct timeval tp;
+  gettimeofday(&tp, NULL);
+  double t1 = tp.tv_sec + tp.tv_usec*1e-6;  
+  return t1-t0;
+  }```]
+
+`x`, `y`, `z`, `t`, and `s` are elements of a `struct`
+.smallerer[
+```C   
+typedef struct {
+  float x, y, z, t;
+  float s;
+} st_coords;
+```
+]]
+
+.right-column[
+
+The computation of `s` is a loop over an array of `st_coords`:
+
+.smallerer[
+```C
+void
+comp_s(st_coords *arr, int L)
+{
+  for(int i=0; i<L; i++) {
+    float x = arr[i].x;
+    float y = arr[i].y;
+    float z = arr[i].z;
+    float t = arr[i].t;
+    float s = t*t - (x*x + y*y + z*z);
+    arr[i].s = sqrt(s);
+  }
+  return;
+}```
+]
+]
+
+---
+# AoS to SoA
+
+.left-column[ For the first task you will modify `space-time-aos.c`. You have instructions tagged with `_TODO_A_`.
+
+After correcting for `beta_fp` and `beta_io`, you need to compile:
+
+`module load intel-para`<br/>
+`make space-time-aos`
+
+and submit the prepared submit script:
+
+`sbatch sub-A.job`
+
+This will run the code for various lengths `L`. The output is in `aos.txt`. There is a `gnuplot` script so that you can visualize the output. You'll need to `module load gnuplot`, run `gnuplot` and then from the gnuplot prompt:
+`load 'plot-A.gpl'`
+]
+.right-column[
+.smallerer[
+```C
+void
+comp_s(st_coords *arr, int L)
+{
+  for(int i=0; i<L; i++) {
+    float x = arr[i].x;
+    float y = arr[i].y;
+    float z = arr[i].z;
+    float t = arr[i].t;
+    float s = t*t - (x*x + y*y + z*z);
+    arr[i].s = sqrt(s);
+  }
+  return;
+}
+...
+double beta_fp = 0 /* _TODO_A_: insert number of */
+                   /* Gflop/sec based on timing  */;
+double beta_io = 0 /* _TODO_A_: insert number of */
+	               /* Gbyte/sec based on timing  */;    
+
+```
+
+```bash
+gnuplot
+	G N U P L O T
+	Version 5.0 patchlevel 0    last modified 2015-01-01
+
+	Copyright (C) 1986-1993, 1998, 2004, 2007-2015
+	Thomas Williams, Colin Kelley and many others
+
+	gnuplot home:     http://www.gnuplot.info
+	faq, bugs, etc:   type "help FAQ"
+	immediate help:   type "help"  (plot window: hit 'h')
+
+Terminal type set to 'x11'
+gnuplot> load 'plot-A.gpl'
+```
+]
+]
+
+---
+# AoS to SoA
+
+### Task A
+
+The resulting plot should look like:
+![aos](./aos.png)
+
+---
+# AoS to SoA
+
+.left-column[ In Task B you need to modify `space-time-soa.c`. First transfer your modifications from `space-time-aos.c`, tagged with `_TODO_A_`.
+
+`space-time-soa.c` implements a structure of arrays rather than an array of structures:
+```C
+typedef struct {
+  float *x, *y, *z, *t, *s;
+} st_coords;
+```
+
+For the pieces tagged with `_TODO_B_` you need to implement `comp_s()`
+in intrinsics. Once done, as in Task A, make and submit:
+
+`make space-time-soa`<br/>
+`sbatch sub-B.job`
+
+and plot in gnuplot: `load 'plot-B.plt'`.
+]
+
+.right-column[
+.smallerer[
+```C
+void
+comp_s(st_coords arr, int L)
+{
+  for(int i=0; i<L; i+=8) {
+    __m256 x = _mm256_load_ps(&arr.x[i]);
+    __m256 y = _mm256_load_ps(&arr.y[i]);
+    __m256 z = _mm256_load_ps(&arr.z[i]);
+    __m256 t = _mm256_load_ps(&arr.t[i]);
+    register __m256 s0, s1; /* Temporaries */
+    /* 
+       _TODO_B_ 
+
+       Complete this function using intrinsics so that is computes: 
+
+       s[i:i+8] = sqrt(t[i:i+8]**2 - (
+                                     x[i:i+8]**2 +
+	                                 y[i:i+8]**2 +
+	                                 z[i:i+8]**2
+									 )
+	                  )
+
+       where, s, t, x, y, z are members of arr.
+
+       You will use:
+       
+       _mm256_mul_ps();
+       _mm256_add_ps();
+       _mm256_sub_ps();
+       _mm256_sqrt_ps();
+    */
+    
+    _mm256_store_ps(&arr.s[i], s0);
+  }  
+  return;
+}
+
+```
+]
+]
+
+---
+# AoS to SoA
+
+### Task B
+
+The resulting plot should look like:
+![soa](./soa.png)
+
+
+---
+# AoS to SoA
+
+### Task C
+
+In Task C, you will use `space-time-soa-r.c`. This is mostly identical
+to `space-time-soa.c`, just that rather than striding sequentially the
+array in `comp_s()`, the array is strided randomly.
+```C
+void
+comp_s(st_coords arr, int L)
+{
+  for(int j=0; j<L; j+=8) {
+    int i = (rand() % (L/8)) * 8;
+    __m256 x = _mm256_load_ps(&arr.x[i]);
+    ...
+```
+
+
+This makes prefetching unpredictable. Transfer the `_TODO_A_` and
+`_TODO_B_` tasks you completed in the previous tasks to this
+task. Compile and run as before, using: `make space-time-soa-r` and
+`sbatch sub-C.job`. The results can be plotted using `plot-C.gpl`.
+
+---
+# AoS to SoA
+
+### Task C
+
+The resulting plot should look like:
+![soa](./soa-r.png)
+
+---
+# AoS to SoA
+
+### Task D
+
+In Task D, you will use `space-time-aosoa-r.c`. This uses a AoSoA rather than a SoA:
+```C
+typedef struct {
+  float __attribute__((aligned(32))) x[VL];
+  float __attribute__((aligned(32))) y[VL];
+  float __attribute__((aligned(32))) z[VL];
+  float __attribute__((aligned(32))) t[VL];
+  float __attribute__((aligned(32))) s[VL];
+} st_coords;
+```
+where `VL` is set to the vector length in units of `float`s.
+
+Transfer the `_TODO_A_` and `_TODO_B_` tasks you completed in the
+previous tasks to this task. Compile and run as before, using: `make
+space-time-aosoa-r` and `sbatch sub-D.job`. The results can be plotted
+using `plot-D.gpl`. You will notice that this version is slightly
+faster than in Task C. Can you explain why?
+
+---
+# AoS to SoA
+
+### Task D
+
+The resulting plot should look like:
+![soa](./aosoa-r.png)
+
+---
+# MatMul
+
+### This exercise deals with a matrix-matrix multiplication
+
+Navigate to `CoS-2/Optim/Ex/MatMul/`. There is only one file `mm.c`.
+
+In the first task (task A), you will need to complete the `_TODO_A_`
+tags. Here this requires:
+
+1. Computing `beta_fp`, so that the flops are reported.
+
+2. Implement naively the matrix matrix multiplication in `mat_mul()`.
+
+```C
+void
+mat_mul(double *C, int M, int N, double *A, double *B)
+{
+  for(int i=0; i<M; i++) {
+    for(int j=0; j<M; j++)
+      C[i*M + j] = 0;
+    /*
+      _TODO_A_
+
+      Implement the matrix-matrix multiplication naively
+     */
+  }
+  return;
+}
+```
+
+---
+# MatMul
+
+When done: `make mm-orig`, `sbatch sub-A.job`, and then you can plot
+the result with `plot-A.gpl`. The job script runs the `mm-orig`
+program for multiple values of `M` and `N` with `M < N`. The result
+should look like:
+
+![soa](./mm-orig.png)
+
+---
+# MatMul
+
+In Task B you will implement a blocked version of the matrix-matrix
+multiplication. Find the tags with `_TODO_B_`. 
+
+.smallerer[
+```C
+void
+mat_mul_blocked(double *C, int M, int N, double *A, double *B)
+{
+  double Ab[BM*BN];
+  double Bb[BM*BN];
+  double Cb[BM*BM];
+  for(int i=0; i<M; i+=BM)
+    for(int j=0; j<M; j+=BM) {
+
+      /* Set Cb to zero */
+      for(int ib=0; ib<BM; ib++)	
+	    for(int jb=0; jb<BM; jb++) {
+	      Cb[ib*BM + jb] = 0;
+	    }
+      
+      /*
+       * _TODO_B_
+       *
+       * Implement the blocked matrix-matrix multiplication
+       * Steps:
+       *
+       * 0. Loop over k-blocks
+       * 1. Fill Ab with the block that begins from A[i:][k:]
+       * 2. Fill Bb with the block that begins from B[k:][j:]
+       * 3. Do the little matrix matrix multiplication Cb = Ab*Bb
+       *
+       */
+      
+      /*
+       * Copy Cb to C[i][j];
+       */
+	   ...
+```
+]
+---
+# MatMul
+
+While developing the matrix-matrix multiplication, you can `make mm-blck` and run for a small `M`, `N`, e.g.:
+
+`./mm-blck 64 64`
+
+The code checks that the two versions (blocked and original) produce the same result and will print to the screen if there is a discrepancy, e.g.:
+
+```shell
+ ORIG: M = 128, N = 128, took: 5.25e-04 sec, P = 7.99e+03 Mflop/s
+ BLCK: M = 128, N = 128, took: 4.79e-04 sec, P = 8.76e+03 Mflop/s, BM = 16, BN = 16
+ Non zero diff: 6.559491e-02
+```
+
+When done, and the two versions agree, submit with: `sbatch sub-B.job`, and after the job completes you can plot the result with `plot-B.gpl`. Note that the block lengths are defined at compile time. They are defined at the beginning:
+
+.left-column[
+```C
+/*
+ * Block length in M direction
+ */
+#ifndef BM
+#define BM 16
+#endif
+```
+]
+.right-column[
+```C
+/*
+ * Block length in N direction
+ */
+#ifndef BN
+#define BN 16
+#endif
+```
+]
+
+---
+# MatMul
+
+The resulting plot should look like:
+![soa](./mm-blck.png)
+
+---
+# 3D Laplacian
+
+- Consider the 3D "gauge" Laplacian.
+
+$$\phi(\vec{r}) = \nabla \psi(\vec{r}) = 6\psi(\vec{r})
+-\sum\_{i=1}^{N\_d}[u\_{\hat{i}}(\vec{r})\psi(\vec{r}+\hat{i}) + u^*_{\hat{i}}(\vec{r}-\hat{i})\psi(\vec{r}-\hat{i})]
+$$
+
+.left-column[
+with $N_d=3$ the number of dimensions, 
+
+$u\_\hat{i}(\vec{r}) \in \mathbb{C}$, and $|u\_\hat{i}(\vec{r})|=1$
+
+$\psi(\vec{r}) \in \mathbb{C}$
+
+- $2\cdot N\_d$ "$u$"s at each site $\vec{r}$, but only $N\_d$ unique "$u$"s
+
+- Conjugation flips the direction of $u$, i.e. $u\_{-\hat{i}}(\vec{r}) = u^*\_{\hat{i}}(\vec{r})$
+]
+
+.right-column[
+![stencil](./stencil.png)
+
+-----
+
+- $\hat{i}$ unit vector in direction $i$, <br/> ($u\_{\hat{0}}(\vec{r})$, $u\_{\hat{1}}(\vec{r})$, $u\_{\hat{2}}(\vec{r})$), or <br/>
+($u\_{\hat{z}}(\vec{r})$, $u\_{\hat{y}}(\vec{r})$, $u\_{\hat{x}}(\vec{r})$)
+]
+
+---
+# 3D Laplacian
+
+- Conjugate gradient (CG) to solve
+
+$$ \nabla x = b$$
+
+.left-column[
+initial guess $x$<br/>
+$r_0 = b - \nabla x$<br/>
+$p = r_0$<br/>
+loop until $||r_0||$ small enough<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$\alpha$ = $\frac{r\_0^\dagger r\_0}{p^\dagger \nabla p}$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$x$ = $\alpha$p + $x$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$r\_1$ = -$\alpha\nabla p$ + $r\_0$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$\beta$ = $\frac{r\_1^\dagger r\_1}{r\_0^\dagger r\_0}$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$p$ = $\beta p$ + $r\_1$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$r\_0$ = $r\_1$
+
+Linear algebra already implemented in exercise: `xdotx()`, `xdoy()`, `axpy()`, `aypx()`, `xmy()`
+]
+
+.right-column[.smallerer[
+```shell
+$ ./lapl 256
+      0, res = +1.000000e+00
+      1, res = +1.665753e-01
+      2, res = +3.333299e-02
+      3, res = +6.665369e-03
+      4, res = +1.333499e-03
+      5, res = +2.668942e-04
+      6, res = +5.341509e-05
+      7, res = +1.074500e-05
+      8, res = +2.170688e-06
+      9, res = +4.405346e-07
+     10, res = +8.984282e-08
+     11, res = +1.842731e-08
+     12, res = +3.796921e-09
+     13, res = +7.870543e-10
+     14, res = +1.639781e-10
+     15, res = +3.433125e-11
+     16, res = +7.228439e-12
+     17, res = +1.530630e-12
+     18, res = +3.257463e-13
+     19, res = +6.973104e-14
+     20, res = +1.499168e-14
+     21, res = +3.237763e-15
+     22, res = +7.021646e-16
+     23, res = +1.529374e-16
+     24, res = +3.340107e-17
+     25, res = +7.319255e-18
+     26, res = +1.607249e-18
+     27, res = +3.537078e-19
+Converged after     27 iterations,
+final res = +4.039893e-14
+```]]
+
+---
+# 3D Laplacian
+
+- Navigate to `CoS-2/Optim/Ex/lapl-3D/`
+
+- [`lapl.c`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/lapl.c) implements a CG algorithm which solves $\nabla x = b$ for a
+random $b$ and gauge $u$
+
+- The `_TODO_A_` pieces need completion
+
+- This includes the bulk of the Laplacian operation in function `lapl()` at [`lapl.c:145`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/lapl.c#L145)
+
+- It also includes adding an `OpenMP` pragma over the main loop in `lapl()` at [`lapl.c:123`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/lapl.c#L123)
+
+- After you're done compile with `make A` and submit the job
+  `sub-A.job`. You can then plot within gnuplot with `load 'plot-A.gpl'`
+
+---
+# 3D Laplacian
+
+![lapl-orig](./lapl-orig.png)
+
+The plot is the performance vs the number of OMP threads
+
+---
+# 3D Laplacian
+
+- In Task B, you need to modify `laplb.c`
+
+- This is to implement a "blocked" version of the stencil operation in
+  `lapl()`
+
+![lapl-orig](./lapl-block.png)
+
+- Block in $x$ and $y$ directions
+
+- Distribute OMP threads so that each thread processes a block
+
+- To check correctness, you should obtain the same CG iterations as
+  the original version
+
+---
+# 3D Laplacian
+
+- In Task B, you need to modify `laplb.c`
+
+- This is to implement a "blocked" version of the stencil operation in
+  `lapl()`
+
+![lapl-blck](./blocking-lapl.png)
+
+- `A[z][y][x]` $\rightarrow$ `bA[x0][y0][z][y1][x1] = A[z][y1 + y0*Sy][x1 + x0*Sx]`
+
+- Distribute OMP threads so that each thread processes a block
+
+- To check correctness, you should obtain the same CG iterations as
+  the original version
+
+---
+
+# 3D Laplacian
+
+
+- The `_TODO_B_` tag the pieces you need to modify in [`laplb.c`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/laplb.c). This includes:
+  - Completing the bulk calculation of `lapl()`, now that the lattices are blocked [`laplb.c:284`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/laplb.c#L284)
+  - Inserting an `OpenMP` pragma to *distribute the blocks* over threads [`laplb.c:246`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/laplb.c#L246)
+
+- Handling of the boundaries is taken care of [`laplb.c:316`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/laplb.c#L316)
+
+- Compile with `make B`, submit with `sbatch sub-B.job`, and plot in
+  gnuplot with `load 'plot-B.gpl'`
+
+
+---
+
+# 3D Laplacian
+
+The result of Task B should look like:
+
+![lapl-orig](./lapl-blck.png)
+
+Performance of the blocked code compared to the original version
+
+---
+# 3D Laplacian
+
+- Task C involves implementing a version of `lapl()` which is easier for vectorization
+
+![lapl-rear](./lapl-rear.png)
+
+- `A[z][y][x][reim]` $\rightarrow$ <br/>`vA[z0][y][x][reim][z1] = A[z0 + z1*L/4][y][x][reim]`
+
+- Notice shift required on boundaries
+
+---
+# 3D Laplacian
+
+- Task C involves implementing a version of `lapl()` which is easier for vectorization
+
+- `A[z][y][x][reim]` $\rightarrow$ <br/>`vA[z0][y][x][reim][z1] = A[z0 + z1*L/4][y][x][reim]`
+
+E.g. for the case of 2D:
+
+.smallerer[
+```C
+for(int y=0; y<L/4; y++)
+for(int x=0; x<L; x++) {
+ vB[y][x][0] = 4*vA[y][x][0] - (vA[y][x+1][0] + vA[y][x-1][0] + vA[y+1][x][0] + vA[y-1][x][0]);
+ vB[y][x][1] = 4*vA[y][x][1] - (vA[y][x+1][1] + vA[y][x-1][1] + vA[y+1][x][1] + vA[y-1][x][1]);
+ vB[y][x][2] = 4*vA[y][x][2] - (vA[y][x+1][2] + vA[y][x-1][2] + vA[y+1][x][2] + vA[y-1][x][2]);
+ vB[y][x][3] = 4*vA[y][x][3] - (vA[y][x+1][3] + vA[y][x-1][3] + vA[y+1][x][3] + vA[y-1][x][3]);
+}
+```
+]
+
+- Notice shift required on boundaries, e.g. for the $y=0$ boundary in the 2D problem:
+
+.smallerer[
+```C
+y = 0;
+for(int x=0; x<L; x++) {
+ vB[0][x][0] = 4*vA[0][x][0] - (vA[0][x+1][0] + vA[0][x-1][0] + vA[1][x][0] + vA[L/4-1][x][3]);
+ vB[0][x][1] = 4*vA[0][x][1] - (vA[0][x+1][1] + vA[0][x-1][1] + vA[1][x][1] + vA[L/4-1][x][2]);
+ vB[0][x][2] = 4*vA[0][x][2] - (vA[0][x+1][2] + vA[0][x-1][2] + vA[1][x][2] + vA[L/4-1][x][1]);
+ vB[0][x][3] = 4*vA[0][x][3] - (vA[0][x+1][3] + vA[0][x-1][3] + vA[1][x][3] + vA[L/4-1][x][0]);
+}
+```
+]
+
+---
+# 3D Laplacian
+
+- The code to be modified is now [`laplv.c`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/laplv.c), the parts missing in tagged with `_TODO_C_`
+
+- Modify `laplv.c`, compile with `make C`, run with `sbatch sub-C.job`
+  and plot using `plot-C.gpl`.
+
+- After completing these parts you should obtain similar CG history as before
+
+- Here the bulk calculation of the Laplacian is implemented. Also the
+`OpenMP` pragma has been inserted
+
+- You need to complete the pieces that do the shuffling for the boundaries at [`laplv.c:254`](https://github.com/g-koutsou/CoS-2/blob/master/Optim/Ex/Lapl-3D/laplv.c#L254)
+
+.left-column[.smallerer[
+```C
+if(z == 0) {
+  /* _TODO_C_
+   * 
+   * Use shift_dn() or shift_up() to appropriately
+   * shift the necessary structures, when on the
+   * boundary
+   */
+}
+```
+]]
+.right-column[.smallerer[
+```C
+if(z == lz-1) {
+  /* _TODO_C_
+   * 
+   * Use shift_dn() or shift_up() to appropriately
+   * shift the necessary structures, when on the
+   * boundary
+   */
+}
+
+```
+]]
+
+.one-column[
+- With `shift_up()` and `shift_dn()` are already defined for you
+]
+---
+# 3D Laplacian
+
+Result of Task C should look like:
+
+![lapl-orig](./lapl-vect.png)
+
+Vector-friendly version compared to original
+
+</textarea>
+  <script src="resources/remark.js" type="text/javascript">
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+  <!--	<script src="/Users/koutsou/Library/MathJax/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script> -->
+  <script type="text/javascript">
+    var slideshow = remark.create({slideNumberFormat: function (current, total) {
+    return (current != 1) ? '<span class="sn"> ' + current + '</span>' : '';}})
+    
+    // Setup MathJax
+    MathJax.Hub.Config({
+    tex2jax: {
+    inlineMath: [ ['$','$']],
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    <!-- extensions: ["AMSmath.js", "AMSsymbols.js", "autobold.js"], -->
+    },
+    'HTML-CSS': {preferredFont: 'Neo-Euler'},
+    });
+    MathJax.Hub.Queue(function() {
+    $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+    return(elem.SourceElement());
+    }).parent().addClass('has-jax');
+    });
+    
+    MathJax.Hub.Configured();
+  </script>    
+</body>
+</html>
